@@ -94,9 +94,10 @@ jobs:
 
       - name: Build and push Docker image
         env:
+          DOWNLOAD_URL: ${{ vars.IOSCROSS_DOWNLOAD_URL }}
           IOSCROSS_PASSWORD: ${{ secrets.IOSCROSS_PASSWORD }}
         run: |
-          docker build --build-arg DOWNLOAD_URL=${{ vars.IOSCROSS_DOWNLOAD_URL }} \
+          docker build --build-arg DOWNLOAD_URL="$DOWNLOAD_URL" \
             --secret id=IOSCROSS_PASSWORD,env=IOSCROSS_PASSWORD \
             -t $REGISTRY/godot-ioscross:$VERSION -t $REGISTRY/godot-ioscross:latest platform/ioscross
           docker push $REGISTRY/godot-ioscross:$VERSION
